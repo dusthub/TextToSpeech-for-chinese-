@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Text To Speech</title>
+    <link href="{{ url_for('static', filename = 'bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+
+    <link href="{{ url_for('static', filename = 'seg.css') }}" type="text/css" rel="stylesheet">
+    <script src="{{ url_for('static', filename = 'jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'seg.js') }}"></script>
+</head>
+<body>
+<!--导航条-->
+<div class="navbar navbar-default" role="navigation">
+    <ul class="nav navbar-nav">
+        <li><a href="#">截词朗读</a></li>
+        <li><a href="#">关于</a></li>
+        <li><a href="http://2thdust.sinaapp.com/">DustHubp</a></li>
+        <li><a href="https://github.com/fxsjy/jieba">jieba Python</a></li>
+        <li><a href="http://www.voicerss.org/">The Voice Rss</a></li>
+    </ul>
+</div>
+<!--程序主体-->
+<div class="container">
+
+    <!--标题-->
+    <h1>Text To Speech</h1>
+
+    <!--未进行截词文本模块-->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 seg-main">
+            <form role="form" action="/api" id="seg-form" method="post">
+                <div class="form-group">
+                    <textarea class="form-control" id="before-cut" name="text" placeholder="在文本框中输入需要进行截词的文本,系统将会返回截词后文本、截词后的语音合成."></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-primary" id="submit">GO</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--截词后文本模块-->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 seg-main">
+            <div class="panel panel-default">
+                <div class="panel-heading">(cut)截词</div>
+                <div class="panel-body" id="cut-text"></div>
+                <div class="panel-footer">By python 'jieba'分词</div>
+            </div>
+        </div>
+    </div>
+
+    <!--截词后多媒体模块-->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 seg-main">
+            <div class="panel panel-default">
+                <div class="panel-heading">speech(语音)</div>
+                <div class="panel-body">
+                    <audio controls>
+                        <source src="https://api.voicerss.org/?key=32fbc0ed950c485f8c7aecafecc4a8f8&src={{ src.decode('utf-8') }}&hl=zh-cn&c=MP3">
+                    </audio>
+                </div>
+                <div class="panel-footer">By The Voice RSS Text-To-Speech</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container">
+        <div class="row">
+            <div class="col-md-12 seg-footer">By DustHub  2014 - <span id="currYear"></span></div>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
