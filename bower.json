@@ -1,0 +1,23 @@
+{
+  "name": "nomal",
+  "version": "0.0.0",
+  "authors": [
+    "dusthub <hsdsrzyg@gmail.com>"
+  ],
+  "description": "seg text",
+  "keywords": [
+    "text"
+  ],
+  "license": "MIT",
+  "homepage": "http://2thdust.sinaap.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1"
+  }
+}
