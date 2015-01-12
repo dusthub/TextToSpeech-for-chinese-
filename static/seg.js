@@ -21,5 +21,22 @@ $(document).ready(function(){
 
     });
 
+    $("#speech-form").submit(function(event) {
+
+        event.preventDefault();
+
+        var $form = $( this );
+        var $r = $form.find('#r').val();
+        var $f = $form.find('#f').val();
+        var $to_cut = $('#cut-text').val();
+        var url = $form.attr('action');
+        alert($r);
+
+        $.post( url, { 'r' : $r, 'f' : $f, 'to_cut' : $to_cut},
+            function(data) {
+            }
+        );
+    });
+
 
 });

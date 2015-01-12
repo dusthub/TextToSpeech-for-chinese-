@@ -13,3 +13,7 @@ h1 {
 .seg-footer {
     text-align: center;
 }
+
+.row {
+    padding-bottom: 12px;
+}

@@ -21,16 +21,24 @@ def cut(to_cut=EXAMPLE):
     dust_seg = ''
 
     for value in seg:
-        dust_seg = dust_seg + value.encode('utf-8') + ','
+        dust_seg = dust_seg + value.encode('utf-8') + '   '
 
-    return dust_seg[0:-1]
+    return dust_seg[0:-2]
 
 
-@app.route('/api', methods=['GET', 'POST'])
+@app.route('/api/cut', methods=['GET', 'POST'])
 def ajax_post_text():
     to_cut = request.form.get('text')
     # return jsonify(resp={'cut': to_cut})
     return cut(to_cut)
+
+
+@app.route('/api/speech', methods=['POST'])
+def ajax_post_cut():
+    r = request.form.get('r')
+    f = request.form.get('f')
+    tts_cut = request.form.get('tts_cut')
+    return render_template('seg.html', r=r, f=f, src=tts_cut is None and EXAMPLE or tts_cut)
 
 
 @app.route('/')
@@ -39,7 +47,7 @@ def index():
     默认处理方法
     :return:
     """
-    return render_template('seg.html', src=EXAMPLE)
+    return render_template('seg.html', cut=cut(EXAMPLE), src=cut(EXAMPLE))
 
 
 if __name__ == '__main__':
