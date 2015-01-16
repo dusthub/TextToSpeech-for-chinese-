@@ -80,7 +80,9 @@
                                         <div class="dropdown">
                                             <span>语速:</span>
                                             <select name="r" id="r" class="btn btn-default dropdown-toggle">
-                                                <option selected>7</option>
+                                                {% for default_r in R %}
+                                                    <option name="{{ default_r }}" id="{{ default_r }}">{{ default_r }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -89,12 +91,22 @@
                                         <div class="dropdown">
                                             <span>音频格式:</span>
                                             <select name="f" id="f" class="btn btn-default dropdown-toggle">
-                                                <option selected>8khz_8bit_mono</option>
+                                                {% for default_f in F %}
+                                                <option name="{{ default_f }}" id="{{ default_f }}">{{ default_f }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-2 col-md-offset-2">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <select name="cut-speech" id="cut-speech" class="btn btn-default dropdown-toggle">
+                                                <option name="selected-cut-speech" id="selected-cut-speech" selected></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary" id="submit">Speech</button>
                                     </div>
 
@@ -106,7 +118,7 @@
                             {# 语音合成结果 #}
                             <div class="row">
                                 <div class="col-md-12">
-                                    <audio controls src="https://api.voicerss.org/?key=32fbc0ed950c485f8c7aecafecc4a8f8&src={{ src.decode('utf-8') }}&hl=zh-cn&c=MP3"></audio>
+                                    <audio controls src="https://api.voicerss.org/?key=32fbc0ed950c485f8c7aecafecc4a8f8&src={{ src.decode('utf-8') }}&r={{ r.decode('utf-8') }}&f={{ f.decode('utf-8') }}&hl=zh-cn&c=MP3"></audio>
                                 </div>
                             </div>
 
