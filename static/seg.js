@@ -3,8 +3,10 @@
  */
 $(document).ready(function(){
 
+    //站点脚注时间
     $('#currYear').empty().append(new Date().getFullYear())
 
+    //异步发送post请求，发送需截词文本
     $("#seg-form").submit(function(event) {
 
         event.preventDefault();
@@ -21,22 +23,11 @@ $(document).ready(function(){
 
     });
 
+    //追加截词后文本在表单域中
     $("#speech-form").submit(function(event) {
-
-        event.preventDefault();
-
         var $form = $( this );
-        var $r = $form.find('#r').val();
-        var $f = $form.find('#f').val();
-        var $to_cut = $('#cut-text').val();
-        var url = $form.attr('action');
-        alert($r);
-
-        $.post( url, { 'r' : $r, 'f' : $f, 'to_cut' : $to_cut},
-            function(data) {
-            }
-        );
+        $(document).find('#selected-cut-speech').empty().append($(document).find('#cut-text').text());
+        //alert($(document).find('#selected-cut-speech').val());
     });
-
 
 });
