@@ -8,10 +8,19 @@ h1 {
     text-align: center;
 }
 
+#before-cut {
+    height: 224px;
+    width: 750px
+}
+
 .row {
     padding-bottom: 12px;
 }
 
 #cut-speech {
     visibility: hidden;
+}
+
+a:link, a:hover, a:visited, a:active {
+    text-decoration: none;
 }

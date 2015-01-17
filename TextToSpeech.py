@@ -43,7 +43,7 @@ def cut(to_cut=EXAMPLE):
     dust_seg = ''
 
     for value in seg:
-        dust_seg = dust_seg + value.encode('utf-8') + ' | '
+        dust_seg = dust_seg + value.encode('utf-8') + '  '
 
     return dust_seg[0:-2]
 
