@@ -30,4 +30,13 @@ $(document).ready(function(){
         //alert($(document).find('#selected-cut-speech').val());
     });
 
+
+    $('#about').click(function(){
+        $('#info').remove();
+        $("<div class='row info' id='info'> <div class='col-md-8 col-md-offset-2'> <div class='alert alert-info row' role='alert'> <button class='close' type='button' data-dismiss='alert'></button>Text To Speech </div> </div> </div>")
+            .insertAfter($('#title'));
+        setTimeout("$('#info').slideUp('slow')", 5000);
+    });
+
+
 });
