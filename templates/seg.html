@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Text To Speech</title>
@@ -15,27 +15,29 @@
 <!--导航条-->
 <div class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
-        <li><a href="#">截词朗读</a></li>
-        <li><a href="#">关于</a></li>
-        <li><a href="http://2thdust.sinaapp.com/">DustHubp</a></li>
+        <li><a href="/">截词朗读</a></li>
+        <li><a href="#" class="about" id="about">关于</a></li>
+        <li><a href="http://2thdust.sinaapp.com/">DustHub</a></li>
         <li><a href="https://github.com/fxsjy/jieba">jieba Python</a></li>
-        <li><a href="http://www.voicerss.org/">The Voice Rss</a></li>
+        <li><a href="http://www.voicerss.org/">The Voice RSS</a></li>
     </ul>
 </div>
 <!--程序主体-->
 <div class="container">
 
-    <!--标题-->
-    <h1>Text To Speech</h1>
+    <div class="row" id="title">
+        <!--标题-->
+        <h1><a href="/">Text To Speech</a></h1>
+    </div>
 
     <!--未进行截词文本模块-->
     <div class="row">
         <div class="col-md-8 col-md-offset-2 seg-main">
-            <form role="form" action="/api" id="seg-form" method="post">
+            <form role="form" action="/api/cut" id="seg-form" method="post">
                 <div class="form-group">
                     <textarea class="form-control" id="before-cut" name="text" placeholder="在文本框中输入需要进行截词的文本,系统将会返回截词后文本、截词后的语音合成."></textarea>
                     <br>
-                    <button type="submit" class="btn btn-primary" id="submit">GO</button>
+                    <button type="submit" class="btn btn-primary" id="submit">Cut</button>
                 </div>
             </form>
         </div>
@@ -46,7 +48,7 @@
         <div class="col-md-8 col-md-offset-2 seg-main">
             <div class="panel panel-default">
                 <div class="panel-heading">(cut)截词</div>
-                <div class="panel-body" id="cut-text"></div>
+                <div class="panel-body" id="cut-text">{{ cut.decode('utf-8') }}</div>
                 <div class="panel-footer">By python 'jieba'分词</div>
             </div>
         </div>
@@ -54,18 +56,69 @@
 
     <!--截词后多媒体模块-->
     <div class="row">
+
         <div class="col-md-8 col-md-offset-2 seg-main">
             <div class="panel panel-default">
                 <div class="panel-heading">speech(语音)</div>
                 <div class="panel-body">
-                    <audio controls>
-                        <source src="https://api.voicerss.org/?key=32fbc0ed950c485f8c7aecafecc4a8f8&src={{ src.decode('utf-8') }}&hl=zh-cn&c=MP3">
-                    </audio>
+                {# 请求语音合成参数 #}
+                    <div class="row">
+                        <form role="form" action="/api/speech" id="speech-form" method="post">
+                            <div class="form-group">
+
+                                <div class="col-md-3">
+                                    <div class="dropdown">
+                                        <span>语速:</span>
+                                        <select name="r" id="r" class="btn btn-default dropdown-toggle">
+                                            {% for default_r in R %}
+                                                <option name="{{ default_r }}" id="{{ default_r }}">{{ default_r }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="dropdown">
+                                        <span>音频格式:</span>
+                                        <select name="f" id="f" class="btn btn-default dropdown-toggle">
+                                            {% for default_f in F %}<option name="{{ default_f }}" id="{{ default_f }}">{{ default_f }}</option>
+                                                {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <select name="cut-speech" id="cut-speech" class="btn btn-default dropdown-toggle">
+                                            <option name="selected-cut-speech" id="selected-cut-speech" selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary" id="submit">Speech</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    {# 语音合成结果 #}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <audio controls src="https://api.voicerss.org/?key=32fbc0ed950c485f8c7aecafecc4a8f8&src={{ src.decode('utf-8') }}&r={{ r.decode('utf-8') }}&f={{ f.decode('utf-8') }}&hl=zh-cn&c=MP3"></audio>
+                        </div>
+                    </div>
+
+
                 </div>
+
                 <div class="panel-footer">By The Voice RSS Text-To-Speech</div>
+
             </div>
         </div>
     </div>
+
 
     <footer class="container">
         <div class="row">
