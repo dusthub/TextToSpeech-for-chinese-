@@ -4,7 +4,7 @@ import jieba
 app = Flask(__name__)
 
 
-EXAMPLE = '在文本框中输入需要进行截词的文本,系统将会返回截词后文本、截词后的语音合成.'
+EXAMPLE = '在文本框中输入需要进行截词的文本，系统将会返回截词后文本、截词后的语音合成.'
 """
 常量,作为截词的示例文本
 """
@@ -43,15 +43,15 @@ def cut(to_cut=EXAMPLE):
     dust_seg = ''
 
     for value in seg:
-        dust_seg = dust_seg + value.encode('utf-8') + '  '
+        dust_seg = dust_seg + value + ' : '
 
-    return dust_seg[0:-2]
+    return dust_seg[0:-2].encode('utf-8')
 
 
 @app.route('/api/cut', methods=['GET', 'POST'])
 def ajax_post_text():
     to_cut = request.form.get('text')
-    return cut(to_cut.encode('utf-8'))
+    return cut(to_cut)
 
 
 @app.route('/api/speech', methods=['POST'])
@@ -62,7 +62,7 @@ def ajax_post_cut():
 
     return render_template('seg.html', r=r, f=f, R=R, F=F,
                            src=tts_cut.encode('utf-8'),
-                           cut=tts_cut is None and cut(EXAMPLE) or tts_cut.encode('utf-8'))
+                           cut=tts_cut.encode('utf-8'))
 
 
 
@@ -73,7 +73,7 @@ def index():
     :return:
     """
     return render_template('seg.html', r=R[0], f=F[0], R=R, F=F,
-                           src=EXAMPLE, cut=cut(EXAMPLE))
+                           src=cut(EXAMPLE), cut=cut(EXAMPLE))
 
 
 if __name__ == '__main__':
